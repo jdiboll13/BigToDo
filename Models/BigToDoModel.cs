@@ -18,5 +18,7 @@ namespace BigToDo.Models
             Complete = true;
             Time = DateTime.Now;
         }
+        public int UserId { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
     }
 }
