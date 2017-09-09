@@ -4,21 +4,18 @@ namespace BigToDo.Models
 {
     public class BigToDoModel
     {
-        public BigToDoModel()
-        {
-        }
 
         public int ID  { get; set; }
         public string TaskName { get; set; }
-        public bool Complete { get; set; } = false;
-        public DateTime Time { get; set; } = DateTime.Now;
-
+        public bool? Complete { get; set; } = false;
+        public DateTime CreateDate { get; set; } = DateTime.Now;
+        public DateTime CompleteDate { get; set; }
+        public string UserId { get; set; }
+        public ApplicationUser ApplicationUser { get; set; }
         public void IsComplete()
         {
             Complete = true;
-            Time = DateTime.Now;
+            CompleteDate = DateTime.Now;
         }
-        public int UserId { get; set; }
-        public ApplicationUser ApplicationUser { get; set; }
     }
 }

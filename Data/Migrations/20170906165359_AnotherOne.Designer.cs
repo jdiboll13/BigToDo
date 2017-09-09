@@ -11,9 +11,10 @@ using System;
 namespace BigToDo.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20170906165359_AnotherOne")]
+    partial class AnotherOne
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -79,13 +80,11 @@ namespace BigToDo.Data.Migrations
 
                     b.Property<bool>("Complete");
 
-                    b.Property<DateTime>("CompleteDate");
-
-                    b.Property<DateTime>("CreateDate");
-
                     b.Property<string>("TaskName");
 
-                    b.Property<string>("UserId");
+                    b.Property<DateTime>("Time");
+
+                    b.Property<int>("UserId");
 
                     b.HasKey("ID");
 

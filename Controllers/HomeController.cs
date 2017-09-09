@@ -6,21 +6,31 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using BigToDo.Models;
 using BigToDo.Data;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 
 namespace BigToDo.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ApplicationDbContext _context;
+        private readonly UserManager<ApplicationUser> _userManager;
 
-        public HomeController(ApplicationDbContext context)
+        public HomeController(ApplicationDbContext context, UserManager<ApplicationUser> um)
         {
             _context = context;
+            _userManager = um;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View(_context.ToDo.ToList());
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            var applicationDbContext = _context.ToDo.Include(p => p.ApplicationUser).Where(x => x.UserId == user.Id);
+
+            return View(applicationDbContext.ToList());
+
         }
         [HttpPost]
         public IActionResult Index(string ItemName)
