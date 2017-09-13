@@ -58,6 +58,18 @@ namespace BigToDo.Controllers
         {
             return View();
         }
+        [HttpPost]
+        public async Task<IActionResult> Create(string newToDo)
+        {
+            var todo = new BigToDoModel();
+            var user = await _userManager.GetUserAsync(HttpContext.User);
+            todo.UserId = user.Id;
+            todo.TaskName = newToDo;
+            _context.Add(todo);
+            await _context.SaveChangesAsync();
+            var applicationDbContext = _context.ToDo.Include(p => p.ApplicationUser).Where(x => x.UserId == user.Id);
+            return View("Index", await applicationDbContext.ToListAsync());
+        }
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
